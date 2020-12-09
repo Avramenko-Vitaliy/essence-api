@@ -8,7 +8,6 @@ import io.jsonwebtoken.SignatureException;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
@@ -26,14 +24,7 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    public static final AntPathMatcher matcher = new AntPathMatcher();
     private final JwtService jwtService;
-    private final Set<String> excludeUrlPatterns;
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        return excludeUrlPatterns.stream().anyMatch(item -> matcher.match(item, request.getServletPath()));
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

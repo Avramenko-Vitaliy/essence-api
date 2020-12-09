@@ -18,4 +18,15 @@ public final class Api {
         public static final String LOGIN = "/login";
         public static final String LOGOUT = "/logout";
     }
+
+    @UtilityClass
+    public static class Products {
+        public static final String PRODUCTS = "/products";
+        public static final String PRODUCT_BY_ID = "/products/{id}";
+    }
+
+    @UtilityClass
+    public static class Brands {
+        public static final String BRANDS = "/brands";
+    }
 }

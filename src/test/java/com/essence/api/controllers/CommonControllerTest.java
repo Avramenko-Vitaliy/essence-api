@@ -46,15 +46,15 @@ public class CommonControllerTest extends BaseControllerTest {
     public void testToken() throws JsonProcessingException {
         given()
                 .when()
-                .get("/essence-api/users")
-                .then().log().all()
+                .get("/essence-api/logout")
+                .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .body("message", equalTo("Token is not set."));
 
         given()
                 .when()
                 .cookie(ADMIN_RIGHT_AUTHORIZATION_COOKIE)
-                .get("/essence-api/users")
+                .get("/essence-api/logout")
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .body("message", equalTo("Xsrf token is not set."));
@@ -63,7 +63,7 @@ public class CommonControllerTest extends BaseControllerTest {
                 .when()
                 .header(WRONG_JWT_HEADER)
                 .cookie(ADMIN_RIGHT_AUTHORIZATION_COOKIE)
-                .get("/essence-api/users")
+                .get("/essence-api/logout")
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .body("message", equalTo("Xsrf token does not match."));
@@ -83,7 +83,7 @@ public class CommonControllerTest extends BaseControllerTest {
                 .when()
                 .cookie(tokenCookie)
                 .header(RIGHT_HEADER)
-                .get("/essence-api/users")
+                .get("/essence-api/logout")
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .body("message", equalTo("Invalid token."));
@@ -102,7 +102,7 @@ public class CommonControllerTest extends BaseControllerTest {
                 .when()
                 .header(RIGHT_HEADER)
                 .cookie(tokenCookie)
-                .get("/essence-api/users")
+                .get("/essence-api/logout")
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED)
                 .body("message", equalTo("Token is expired."));

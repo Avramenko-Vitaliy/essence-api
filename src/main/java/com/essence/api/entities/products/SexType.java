@@ -1,4 +1,4 @@
-package com.essence.api.entities.security;
+package com.essence.api.entities.products;
 
 import lombok.*;
 
@@ -7,16 +7,16 @@ import javax.persistence.*;
 @Data
 @Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "roles")
-public class Role {
+@AllArgsConstructor
+@Table(name = "sex_types")
+public class SexType {
 
     @Getter
     @AllArgsConstructor
     public enum Type {
-        ADMIN(1),
-        USER(2);
+        MEN(1),
+        WOMEN(2);
 
         private int id;
     }

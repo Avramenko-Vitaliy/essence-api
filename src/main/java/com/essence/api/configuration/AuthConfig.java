@@ -19,12 +19,6 @@ import java.util.Set;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class AuthConfig extends WebSecurityConfigurerAdapter {
 
-    private static final Set<String> EXCLUDE_PATHS = Set.of(
-            Api.ROOT_PATH + Api.Session.LOGIN,
-            Api.ROOT_PATH + Api.Build.VERSION,
-            Api.ROOT_PATH + Api.Build.BUILD_TIME
-    );
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().logout().disable();
@@ -34,8 +28,8 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
     @Order(1)
     public FilterRegistrationBean<JwtAuthFilter> jwtFilter(JwtService jwtService) {
         FilterRegistrationBean<JwtAuthFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new JwtAuthFilter(jwtService, EXCLUDE_PATHS));
-        registrationBean.addUrlPatterns(Api.ROOT_PATH + "/*");
+        registrationBean.setFilter(new JwtAuthFilter(jwtService));
+        registrationBean.addUrlPatterns(Api.ROOT_PATH + Api.Session.LOGOUT);
         return registrationBean;
     }
 }
